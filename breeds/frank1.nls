@@ -1,21 +1,21 @@
-breed [benevolents benevolent]
+breed [frankensteins1 frankenstein1]
 
-benevolents-own [
+frankensteins1-own [
   max-k
 ]
 
 
-to benevolents-setup [active-turtle]
+to frankensteins1-setup [active-turtle]
   turtles-setup active-turtle
   set max-k 2
   set document? false
   set tags n-of (one-of n-values 5 [?]) n-values 10 [?]
-  set color red
+  set color blue
 end
 
 ;; [BREED]-GO PROCEDURE: The go procedure for each breed describes the actions they take on their turn
-to benevolents-go [active-turtle]
-  let topk topk-popularity active-turtle ([max-k] of active-turtle)
+to frankensteins1-go [active-turtle]
+  let topk topk-random active-turtle ([max-k] of active-turtle)
   
   let like-list (like-tag active-turtle topk)
   

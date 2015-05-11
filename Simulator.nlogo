@@ -2,6 +2,7 @@
 __includes [
   "breeds/structure.nls" ;;This file contains the template for a new breed.
   "breeds/benevolent.nls"
+  "breeds/frank1.nls"
   
   "strategies/topk.nls"
   "strategies/topm.nls"
@@ -20,51 +21,59 @@ globals[
 turtles-own[
   document?                 ;;Is this agent a document or a peer?
   tags                      ;;What tags do this document or peer have?
-  score
+  score                     ;;
+  turns                     ;;
 ]
 
 ;; SETUP PROCEDURE: initialize variables and classes
 to setup 
   ;;Clear the values from the last simulation
-  clear-turtles
+  clear-all
   reset-ticks
   
   ;;Set the random seed if a value for it was provided
   if (random-seed?) [random-seed the-random-seed]
   
   ;;Set the maximum number of tags for the network to use
-  set max-tag 5
+  set max-tag 1
+
+  set-default-shape turtles "circle"
   
   ;;Initialize the population of each breed
   make-populations
   
+  ask turtles [show breed]
+  ask turtles with [breed = benevolents] [show breed]
   my-layout
 end
 
 ;; MAKE-POPULATIONS PROCEDURE: Set the initial population of each breed
 ;; as well as values belonging to each individual (ie tags)
 to make-populations
-  create-benevolents 4
-  
-  crt 10 [
+  create-benevolents 100
+  create-frankensteins1 100
+  crt 40 [
     set document? true 
 
-    set tags n-of 4 n-values 9 [?]
+    set tags n-of (one-of n-values 5 [?]) n-values 10 [?]
     set color grey
   ]
   
   let active-turtle ""
   ask turtles [
     set active-turtle self
-    run word breed "-setup active-turtle"
-    
+    run word breed "-setup active-turtle" 
   ]
   
 end
 
 ;; TEMP: relieves error in setup
 to turtles-setup [active-turtle]
-  
+  set score 0
+  set turns 1
+  set size 1
+  set label who
+  set label-color black
 end
 
 ;; GO PROCEDURE: This procedure is called once each 'tick', it is the top-level function for the running simulation
@@ -73,6 +82,7 @@ to go
   let active-turtle (one-of turtles with [not document?])
   run word [breed] of active-turtle "-go active-turtle"
   
+  ask active-turtle [set turns turns + 1] 
   tick
   
   ;layout ;Copied layout code
@@ -83,10 +93,10 @@ to my-layout
   ask patches [ifelse (pxcor = 0) [ set pcolor white - 2 ] [ set pcolor white - .3 ]]
   
   ask turtles [
-    ifelse (document?) [set xcor 7][set xcor -7] 
+    ifelse (document?) [set xcor 12][set xcor -12] 
   ]
   let factor sqrt count turtles 
-  repeat 20 [layout-spring turtles links (1 / factor) (7 / factor) (1 / factor)]
+  repeat 100 [layout-spring turtles links (1 / factor) (7 / factor) (1 / factor)]
   display
   
   
@@ -122,11 +132,11 @@ end
 GRAPHICS-WINDOW
 227
 10
-739
-543
-15
-15
-16.242424242424242
+696
+500
+25
+25
+9.0
 1
 10
 1
@@ -136,10 +146,10 @@ GRAPHICS-WINDOW
 0
 0
 1
--15
-15
--15
-15
+-25
+25
+-25
+25
 0
 0
 1
@@ -218,6 +228,45 @@ NIL
 NIL
 NIL
 1
+
+PLOT
+745
+10
+1093
+223
+Mean Utility vs Ticks
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -2674135 true "" "if (ticks > 0) [plot mean [score] of turtles with [breed  = benevolents]]"
+"pen-1" 1.0 0 -13345367 true "" "if (ticks > 0) [plot mean [score] of turtles with [breed = frankensteins1]]"
+"pen-2" 1.0 0 -7500403 true "" "if (ticks > 0) [plot mean [score] of turtles with [not document?]]"
+
+PLOT
+746
+230
+1093
+476
+Mean Utility per Turn vs Ticks
+NIL
+NIL
+0.0
+10.0
+0.0
+5.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -2674135 true "" "if (ticks > 0) [\nplot \nmean [score] of turtles with [breed  = benevolents] / mean [turns] of turtles with [breed = benevolents]\n]"
+"pen-1" 1.0 0 -13345367 true "" "if (ticks > 0) [\nplot \nmean [score] of turtles with [breed  = frankensteins1] / mean [turns] of turtles with [breed = frankensteins1]\n]"
 
 @#$#@#$#@
 ## WHAT IS IT?

@@ -10,7 +10,6 @@ to-report like-tag [active-turtle topk]
     foreach [tags] of active-turtle [
       if (member? ? [tags] of curr-turtle) [
         set like-list lput curr-turtle like-list
-        ask curr-turtle [create-link-with active-turtle] 
       ]
     ] 
   ]
