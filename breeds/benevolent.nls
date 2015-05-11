@@ -1,0 +1,29 @@
+breed [benevolents benevolent]
+
+benevolents-own [
+  max-k
+]
+
+
+to benevolents-setup [active-turtle]
+  set score 0
+  set max-k 5
+  set document? false
+  set tags n-of 1 n-values 9 [?]
+  set color red
+end
+
+;; [BREED]-GO PROCEDURE: The go procedure for each breed describes the actions they take on their turn
+to benevolents-go [active-turtle]
+  let topk topk-popularity active-turtle ([max-k] of active-turtle)
+  
+  let like-list (like-tag active-turtle topk)
+  
+  set score score + score-sum active-turtle topk like-list
+  ;ask active-turtle [create-links-with like-list]
+  foreach like-list [ask ? [create-link-with active-turtle]]
+  
+  
+end
+
+

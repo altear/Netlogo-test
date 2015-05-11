@@ -1,0 +1,20 @@
+to-report topk-popularity [active-turtle k]
+  ;; Sort documents by how many links they have
+  let topk sort-on [count link-neighbors] turtles with [document?]
+  set topk sort-by > topk
+  
+  ;; Limit that list size to 2 
+  report sublist topk 0 k
+end
+
+to-report topk-everything [active-turtle k]
+  let topk sort-on [count link-neighbors] turtles with [document?]
+  set topk sort-by > topk
+  
+  ;; Limit that list size to 2 
+  report topk
+end
+
+to-report topk-random [active-turtle k]
+  report sort-by > n-of k turtles with [document?]
+end

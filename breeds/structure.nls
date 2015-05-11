@@ -1,0 +1,48 @@
+breed [structures structure]
+
+;; [BREED]-GO PROCEDURE: The go procedure for each breed describes the actions they take on their turn
+to structure-go [active-turtle]
+  
+end
+
+;; [BREED]-STRATEGY-TOPK PROCEDURE: The top-k strategy is the process a breed uses to select a top-k list of documents.
+;; the top-k list of documents is a subset of the total list of documents
+;; the top-k list is the list which "liked" documents are selected from
+to structure-strategy-topk [active-turtle]
+  show "We just want to help others"
+end
+
+;; [BREED]-STRATEGY-TOPM PROCEDURE: The top-m strategy is the process a breed uses to select a top-m list of peers.
+;; the top-m list of documents is a subset of the total list of peers
+;; the top-m list is the list of peers that can be "followed"
+to structure-strategy-topm [active-turtle]
+  
+end
+
+;; [BREED]-STRATEGY-LIKE PROCEDURE: The like strategy is the process a peer uses to decide whether to like a document in its top-k
+;; Or, unlike a document that it has already liked
+to structure-strategy-like [active-turtle]
+  
+end
+
+;; [BREED]-STRATEGY-FOLLOW PROCEDURE: The like strategy is the process a peer uses to decide whether to follow a peer in its top-m
+;; Or, unfollow a peer that it has already followed
+to structure-strategy-follow [active-turtle]
+  
+end
+
+;; [BREED]-STRATEGY-PUBLISH PROCEDURE: The publish strategy is the process a peer uses to decide whether or not to publish a document, and what that document's traits should be. 
+;; TODO: Can a document also be deleted?
+to structure-strategy-publish [active-turtle]
+  
+end
+
+;; [BREED]-STRATEGY-LEAVE PROCEDURE: The leave strategy is the process a peer uses to decide when to leave a network, and when to rejoin
+to structure-strategy-leave [active-turtle]
+  
+end
+
+;; [BREED]-CALCULATE-SCORE PROCEDURE: The calculate score procedure determines how the agent's utility is calculated
+to structure-calculate-score [active-turtle]
+  
+end

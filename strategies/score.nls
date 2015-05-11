@@ -1,0 +1,7 @@
+to-report score-sum [active-turtle topk like-list]
+  let temp-score 0
+  foreach topk [
+    ifelse member? ? like-list [set temp-score temp-score + 1] [set temp-score temp-score - 1]
+  ]
+  report temp-score
+end
